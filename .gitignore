@@ -1,0 +1,64 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.tfstate.lock.info
+
+# Ignore local CLI and credentials files
+terraform.tfvars
+*.tfvars
+*.tfvars.json
+*.tfvars.backup
+.terraformrc
+terraform.rc
+
+# Provider plugins and CLI data
+.terraform.d/
+
+# Crash logs
+crash.log
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDEs and editors
+.vscode/
+.idea/
+*.iml
+*.sublime-workspace
+*.sublime-project
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+venv/
+env/
+.env
+.env.*
+
+# Node
+node_modules/
+
+# Logs
+*.log
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+
+# Misc
+Thumbs.db
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Do NOT ignore: .terraform.lock.hcl (keep provider dependency lockfile committed)
