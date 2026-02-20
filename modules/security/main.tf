@@ -45,16 +45,18 @@ resource "aws_vpc_security_group_ingress_rule" "alb_https" {
   }
 }
 
-# ALB egress: to egress destinations
-resource "aws_vpc_security_group_egress_rule" "alb_egress" {
-  for_each          = toset(local.egress_cidrs)
-  security_group_id = aws_security_group.alb.id
-  description       = "All traffic to ${each.value}"
-  ip_protocol       = "-1"
-  cidr_ipv4         = each.value
+# ALB egress: restrict ALB outbound so it can only reach the App security group
+# (prevents ALB from reaching the internet or other CIDRs)
+resource "aws_vpc_security_group_egress_rule" "alb_egress_to_app" {
+  security_group_id            = aws_security_group.alb.id
+  description                  = "Allow ALB to reach App SG on application port"
+  from_port                    = var.app_port
+  to_port                      = var.app_port
+  ip_protocol                  = "tcp"
+  referenced_security_group_id = aws_security_group.app.id
 
   tags = {
-    Name = "${var.name_prefix}-alb-egress"
+    Name = "${var.name_prefix}-alb-egress-to-app"
   }
 }
 

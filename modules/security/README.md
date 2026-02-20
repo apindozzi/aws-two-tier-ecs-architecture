@@ -81,6 +81,13 @@ module "security" {
 - All traffic to VPC CIDR (if `restrict_egress_to_vpc=true`)
 - All traffic to `0.0.0.0/0` (if `restrict_egress_to_vpc=false`)
 
+**Note:** As of this version the module restricts ALB egress to the App security
+group only (instead of CIDR-based egress) to enforce a stricter security posture.
+This means the ALB can only initiate connections to targets in the App security
+group on `app_port`. If you need ALB-originated outbound access to other CIDRs
+(for example, to reach external services), adjust the module to add explicit
+egress rules or change the design accordingly.
+
 ### App Security Group
 
 **Ingress:**

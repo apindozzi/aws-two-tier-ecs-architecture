@@ -39,7 +39,7 @@ module "alb" {
   health_check_path = var.alb.health_check_path
   listener_http     = true
 
-    tags = merge(local.common_tags, {
-        Layer = "alb"
-    })
+  tags = merge(local.common_tags, {
+    Layer = "alb"
+  })
 }
