@@ -35,3 +35,35 @@ variable "alb" {
     health_check_path = string
   })
 }
+
+variable "ecs_cluster" {
+  description = "Configuration for the ECS Cluster."
+
+  type = object({
+    enable_container_insights = bool
+  })
+}
+
+variable "ecs_app" {
+  description = "ECS application configuration grouped as a single object"
+
+  type = object({
+    cluster_arn            = string
+    desired_count          = number
+    task_cpu               = number
+    task_memory            = number
+    proxy_image            = string
+    backend_image          = string
+    proxy_container_port   = number
+    backend_container_port = number
+    assign_public_ip       = bool
+    environment            = map(string)
+    backend_secrets        = map(string)
+    enable_autoscaling     = bool
+    min_capacity           = number
+    max_capacity           = number
+    target_cpu             = number
+    target_memory          = number
+    tags                   = map(string)
+  })
+}
