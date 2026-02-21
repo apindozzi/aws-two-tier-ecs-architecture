@@ -34,7 +34,11 @@ resource "aws_iam_role_policy_attachment" "execution_managed" {
 
 # Extra execution permissions (optional): secrets/ssm/kms (least privilege via ARNs)
 data "aws_iam_policy_document" "execution_extra" {
-  count = var.enable_execution_extra_policy ? 1 : 0
+  count = var.enable_execution_extra_policy && (
+    length(var.execution_ssm_parameter_arns) > 0 ||
+    length(var.execution_secretsmanager_arns) > 0 ||
+    length(var.execution_kms_key_arns) > 0
+  ) ? 1 : 0
 
   dynamic "statement" {
     for_each = length(var.execution_ssm_parameter_arns) > 0 ? [1] : []
@@ -68,7 +72,12 @@ data "aws_iam_policy_document" "execution_extra" {
 }
 
 resource "aws_iam_role_policy" "execution_extra" {
-  count  = var.enable_execution_extra_policy ? 1 : 0
+  count = var.enable_execution_extra_policy && (
+    length(var.execution_ssm_parameter_arns) > 0 ||
+    length(var.execution_secretsmanager_arns) > 0 ||
+    length(var.execution_kms_key_arns) > 0
+  ) ? 1 : 0
+
   name   = "${var.execution_role_name}-extra"
   role   = aws_iam_role.execution.id
   policy = data.aws_iam_policy_document.execution_extra[0].json
