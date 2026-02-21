@@ -1,4 +1,4 @@
-# ecs_reverseproxy_backend
+# ECS Reverse Proxy and Backend Module
 
 Description
 - Deploys an ECS service that runs two containers in the same task: a reverse proxy (proxy) and a backend application (backend). The proxy is registered with an external ALB target group; the backend container is private inside the task and communicates with the proxy via localhost. The backend is intended to be private (no public IP) but still have internet access via VPC NAT.

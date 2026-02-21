@@ -1,4 +1,4 @@
-# ecs
+# ECS Module
 
 ## Description
 
